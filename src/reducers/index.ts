@@ -1,5 +1,11 @@
 import { combineReducers } from 'redux';
+import { moviesReducer } from './movies';
+import { Movie } from '../actions';
 
-export const reducers = combineReducers({
-  counter: () => 1,
+export interface StoreState {
+  movies: Movie[];
+}
+
+export const reducers = combineReducers<StoreState>({
+  movies: moviesReducer,
 });

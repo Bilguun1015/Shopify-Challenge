@@ -8,4 +8,4 @@ export class App extends React.Component {
   }
 }
 
-const MapStateToProps = 
+// const MapStateToProps =
