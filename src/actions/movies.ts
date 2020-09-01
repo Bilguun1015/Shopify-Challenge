@@ -10,8 +10,13 @@ export interface Movie {
   Year: string;
 }
 export interface FetchMoviesAction {
-  type: ActionTypes.fetchMovies;
+  type: ActionTypes.FETCH_MOVIES_SUCCESS;
   payload: Movie[];
+}
+
+export interface FetchMoviesFailure {
+  type: ActionTypes.FETCH_MOVIES_FAILURE;
+  payload: string;
 }
 
 export const fetchMovies = (movieName: string) => {
@@ -19,9 +24,16 @@ export const fetchMovies = (movieName: string) => {
     const response = await axios.get(
       `http://www.omdbapi.com/?s=${movieName}&type=movie&apikey=${process.env.REACT_APP_API_KEY}`
     );
-    dispatch<FetchMoviesAction>({
-      type: ActionTypes.fetchMovies,
-      payload: response.data.Search,
-    });
+    if (response.data.Response === 'True') {
+      dispatch<FetchMoviesAction>({
+        type: ActionTypes.FETCH_MOVIES_SUCCESS,
+        payload: response.data.Search,
+      });
+    } else {
+      dispatch<FetchMoviesFailure>({
+        type: ActionTypes.FETCH_MOVIES_FAILURE,
+        payload: response.data.Response,
+      });
+    }
   };
 };

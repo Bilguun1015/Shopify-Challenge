@@ -26,7 +26,13 @@ class _App extends React.Component<AppProps> {
 
   renderList(): JSX.Element[] {
     return this.props.movies.map((movie: Movie) => {
-      return <div key={movie.imdbID}>{movie.Title}</div>;
+      return (
+        <div key={movie.imdbID}>
+          Title: {movie.Title}
+          Year: {movie.Year}
+          <button>Nominate</button>
+        </div>
+      );
     });
   }
 
