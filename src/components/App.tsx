@@ -1,11 +1,52 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchMovies } from '../actions';
+import { Movie, fetchMovies } from '../actions';
+import { StoreState } from '../reducers';
 
-export class App extends React.Component {
+interface AppProps {
+  movies: Movie[];
+  fetchMovies: Function;
+}
+
+class _App extends React.Component<AppProps> {
+  state = { movieName: '' };
+
+  onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = e.target;
+    this.setState({
+      ...this.state,
+      [name]: value,
+    });
+  };
+
+  onButtonClick = (): void => {
+    const name = this.state.movieName.replace(/\s/g, '+');
+    this.props.fetchMovies(name);
+  };
+
+  renderList(): JSX.Element[] {
+    return this.props.movies.map((movie: Movie) => {
+      return <div key={movie.imdbID}>{movie.Title}</div>;
+    });
+  }
+
   render() {
-    return <div>Hello!</div>;
+    return (
+      <div>
+        <input
+          name="movieName"
+          value={this.state.movieName}
+          onChange={this.onInputChange}
+        />
+        <button onClick={this.onButtonClick}>Search</button>
+        {this.renderList()}
+      </div>
+    );
   }
 }
 
-// const MapStateToProps =
+const MapStateToProps = ({ movies }: StoreState): { movies: Movie[] } => {
+  return { movies };
+};
+
+export const App = connect(MapStateToProps, { fetchMovies })(_App);

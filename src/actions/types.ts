@@ -1,3 +1,3 @@
 export enum ActionTypes {
-  fetchMovies,
+  fetchMovies = 'FETCH_MOVIES',
 }
