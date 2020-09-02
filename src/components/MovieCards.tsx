@@ -8,12 +8,18 @@ interface AppProps {
 }
 
 export class _MovieCards extends React.Component<AppProps> {
+  onButtonClick = (): void => {
+    const nominations = localStorage.getItem('nominations');
+    console.log(nominations);
+  };
+
   render() {
     const { Title, Year } = this.props.movie;
     return (
       <div>
         Title: {Title}
         Year: {Year}
+        <button onClick={this.onButtonClick}>Nominate</button>
       </div>
     );
   }
