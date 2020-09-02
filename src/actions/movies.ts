@@ -7,7 +7,6 @@ export const fetchMovies = (movieName: string) => {
     const response = await axios.get(
       `http://www.omdbapi.com/?s=${movieName}&type=movie&apikey=${process.env.REACT_APP_API_KEY}`
     );
-    console.log(response.data);
     if (response.data.Response === 'True') {
       dispatch<Action>({
         type: ActionTypes.FETCH_MOVIES_SUCCESS,
@@ -19,5 +18,12 @@ export const fetchMovies = (movieName: string) => {
         payload: { error: true, message: response.data.Error },
       });
     }
+  };
+};
+
+export const resetError = (): Action => {
+  return {
+    type: ActionTypes.RESET_ERROR,
+    payload: { error: false, message: '' },
   };
 };

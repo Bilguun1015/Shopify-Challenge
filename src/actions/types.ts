@@ -2,6 +2,7 @@ export enum ActionTypes {
   FETCH_MOVIES_SUCCESS = 'FETCH_MOVIES_SUCCESS',
   FETCH_MOVIES_FAILURE = 'FETCH_MOVIES_FAILURE',
   DELETE_MOVIE = 'DELETE_MOVIE',
+  RESET_ERROR = 'RESET_ERROR',
 }
 
 export interface Error {
@@ -13,6 +14,7 @@ export interface Movie {
   imdbID: string;
   Title: string;
   Year: string;
+  Poster: string;
 }
 
 interface FetchMoviesAction {
@@ -30,4 +32,13 @@ interface DeleteMovieAction {
   payload: string;
 }
 
-export type Action = FetchMoviesAction | FetchMoviesFailure | DeleteMovieAction;
+interface ResetError {
+  type: ActionTypes.RESET_ERROR;
+  payload: Error;
+}
+
+export type Action =
+  | FetchMoviesAction
+  | FetchMoviesFailure
+  | DeleteMovieAction
+  | ResetError;
