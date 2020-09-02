@@ -1,37 +1,36 @@
 import React from 'react';
-// import { connect } from 'react-redux';
-import { Movie, Error, fetchMovies } from '../actions';
-// import { StoreState } from '../reducers';
+import { connect } from 'react-redux';
+import { Movie, Error, setNomination } from '../actions';
+import { StoreState } from '../reducers';
 
 interface AppProps {
   movie: Movie;
+  setNomination: typeof setNomination;
 }
 
-export class _MovieCards extends React.Component<AppProps> {
-  onButtonClick = (): void => {
-    const nominations = localStorage.getItem('nominations');
-    console.log(nominations);
+class _MovieCards extends React.Component<AppProps> {
+  onButtonClick = (event: React.MouseEvent): void => {
+    const imdbID = event.currentTarget.getAttribute('id');
+    if (imdbID) {
+      this.props.setNomination(imdbID);
+    }
   };
 
   render() {
-    const { Title, Year } = this.props.movie;
+    const { Title, Year, imdbID } = this.props.movie;
     return (
-      <div>
+      <div onClick={this.onButtonClick} id={imdbID}>
         Title: {Title}
         Year: {Year}
-        <button onClick={this.onButtonClick}>Nominate</button>
       </div>
     );
   }
 }
 
-// const MapStateToProps = ({
-//   movies,
-//   error,
-// }: StoreState): { movies: Movie[]; error: Error } => {
-//   return { movies, error };
-// };
+const MapStateToProps = ({ error }: StoreState): { error: Error } => {
+  return { error };
+};
 
-// export const MovieCards = connect(MapStateToProps, { fetchMovies })(
-//   _MovieCards
-// );
+export const MovieCards = connect(MapStateToProps, { setNomination })(
+  _MovieCards
+);

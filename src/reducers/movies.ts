@@ -4,6 +4,8 @@ export const moviesReducer = (state: Movie[] = [], action: Action) => {
   switch (action.type) {
     case ActionTypes.FETCH_MOVIES_SUCCESS:
       return action.payload;
+    case ActionTypes.DELETE_MOVIE:
+      return state.filter((movie: Movie) => movie.imdbID !== action.payload);
     default:
       return state;
   }

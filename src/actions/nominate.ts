@@ -1,22 +1,40 @@
-import { Dispatch } from 'redux';
-import { Movie } from './types';
+import { Movie, ActionTypes, Action } from './types';
 
-export const setNomination = ({}: Movie) => {
-  return async (dispatch: Dispatch) => {};
+export const getNomination = (key: string): boolean => {
+  const data = localStorage.getItem('nomination');
+  let nominations: Movie[] = [];
+  if (data) {
+    nominations = JSON.parse(data);
+  }
+  nominations.forEach((each) => {
+    if (each.imdbID === key) {
+      return true;
+    }
+  });
+  return false;
 };
 
-export const getNominations = () => {
-  return async (dispatch: Dispatch) => {
-    let response = await localStorage.getItem('nominations');
-    if (response) {
-      response = JSON.parse(response);
+export const setNomination = (imdbID: string): Action => {
+  if (!getNomination(imdbID)) {
+    const nominations = getNominations();
+    if (nominations) {
+      nominations.push(imdbID);
+      localStorage.setItem('nomination', JSON.stringify(nominations));
     } else {
-      console.log(response);
+      const newNomination: string[] = [imdbID];
+      localStorage.setItem('nomination', JSON.stringify(newNomination));
     }
-    console.log(response);
+  }
+  return {
+    type: ActionTypes.DELETE_MOVIE,
+    payload: imdbID,
   };
 };
 
-// export const getNomination = (key: string): boolean => {
-
-// };
+const getNominations = () => {
+  let response = localStorage.getItem('nomination');
+  if (response) {
+    return JSON.parse(response);
+  }
+  return;
+};

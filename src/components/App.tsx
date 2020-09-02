@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Movie, Error, fetchMovies } from '../actions';
 import { StoreState } from '../reducers';
-import { _MovieCards } from './MovieCards';
+import { MovieCards } from './MovieCards';
 
 interface AppProps {
   movies: Movie[];
@@ -28,9 +28,15 @@ class _App extends React.Component<AppProps> {
 
   renderList(): JSX.Element[] {
     return this.props.movies.map((movie: Movie) => {
-      return <_MovieCards key={movie.imdbID} movie={movie} />;
+      return <MovieCards key={movie.imdbID} movie={movie} />;
     });
   }
+
+  clear = (): void => {
+    if (window['localStorage']['nomination']) {
+      localStorage.removeItem('nomination');
+    }
+  };
 
   render() {
     const { error, message } = this.props.error;
@@ -43,6 +49,7 @@ class _App extends React.Component<AppProps> {
         />
         <button onClick={this.onButtonClick}>Search</button>
         {error ? message : this.renderList()}
+        <button onClick={() => this.clear()}>Clear Storage</button>
       </div>
     );
   }
