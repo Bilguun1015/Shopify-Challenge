@@ -1,11 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Movie, fetchMovies } from '../actions';
+import { Movie, Error, fetchMovies } from '../actions';
 import { StoreState } from '../reducers';
+import { _MovieCards } from './MovieCards';
 
 interface AppProps {
   movies: Movie[];
   fetchMovies: Function;
+  error: Error;
 }
 
 class _App extends React.Component<AppProps> {
@@ -26,17 +28,12 @@ class _App extends React.Component<AppProps> {
 
   renderList(): JSX.Element[] {
     return this.props.movies.map((movie: Movie) => {
-      return (
-        <div key={movie.imdbID}>
-          Title: {movie.Title}
-          Year: {movie.Year}
-          <button>Nominate</button>
-        </div>
-      );
+      return <_MovieCards key={movie.imdbID} movie={movie} />;
     });
   }
 
   render() {
+    const { error, message } = this.props.error;
     return (
       <div>
         <input
@@ -45,14 +42,17 @@ class _App extends React.Component<AppProps> {
           onChange={this.onInputChange}
         />
         <button onClick={this.onButtonClick}>Search</button>
-        {this.renderList()}
+        {error ? message : this.renderList()}
       </div>
     );
   }
 }
 
-const MapStateToProps = ({ movies }: StoreState): { movies: Movie[] } => {
-  return { movies };
+const MapStateToProps = ({
+  movies,
+  error,
+}: StoreState): { movies: Movie[]; error: Error } => {
+  return { movies, error };
 };
 
 export const App = connect(MapStateToProps, { fetchMovies })(_App);

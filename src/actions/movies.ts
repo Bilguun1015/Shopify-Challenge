@@ -2,7 +2,10 @@ import axios from 'axios';
 import { Dispatch } from 'redux';
 import { ActionTypes } from './types';
 
-// extra interface to check if we are dispatching the right action
+export interface Error {
+  error: boolean;
+  message: string;
+}
 
 export interface Movie {
   imdbID: string;
@@ -16,7 +19,7 @@ export interface FetchMoviesAction {
 
 export interface FetchMoviesFailure {
   type: ActionTypes.FETCH_MOVIES_FAILURE;
-  payload: string;
+  payload: Error;
 }
 
 export const fetchMovies = (movieName: string) => {
@@ -24,6 +27,7 @@ export const fetchMovies = (movieName: string) => {
     const response = await axios.get(
       `http://www.omdbapi.com/?s=${movieName}&type=movie&apikey=${process.env.REACT_APP_API_KEY}`
     );
+    console.log(response.data);
     if (response.data.Response === 'True') {
       dispatch<FetchMoviesAction>({
         type: ActionTypes.FETCH_MOVIES_SUCCESS,
@@ -32,7 +36,7 @@ export const fetchMovies = (movieName: string) => {
     } else {
       dispatch<FetchMoviesFailure>({
         type: ActionTypes.FETCH_MOVIES_FAILURE,
-        payload: response.data.Response,
+        payload: { error: true, message: response.data.Error },
       });
     }
   };

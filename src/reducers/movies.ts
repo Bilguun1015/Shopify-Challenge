@@ -1,13 +1,21 @@
-import { Movie, FetchMoviesAction } from '../actions';
-import { ActionTypes } from '../actions/types';
+import { Movie, Error, Action, ActionTypes } from '../actions';
 
-export const moviesReducer = (
-  state: Movie[] = [],
-  action: FetchMoviesAction
-) => {
+export const moviesReducer = (state: Movie[] = [], action: Action) => {
   switch (action.type) {
     case ActionTypes.FETCH_MOVIES_SUCCESS:
       return action.payload;
+    default:
+      return state;
+  }
+};
+
+const initialState: Error = {
+  error: false,
+  message: '',
+};
+
+export const errorReducer = (state = initialState, action: Action) => {
+  switch (action.type) {
     case ActionTypes.FETCH_MOVIES_FAILURE:
       return action.payload;
     default:
