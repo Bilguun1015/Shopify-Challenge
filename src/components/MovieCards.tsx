@@ -20,7 +20,7 @@ class _MovieCards extends React.Component<AppProps> {
   render() {
     const { Title, Year, imdbID, Poster } = this.props.movie;
     return (
-      <Card>
+      <Card raised={true}>
         <Card.Content>
           <Image src={Poster} floated="right" size="mini" />
           <Card.Header>{Title}</Card.Header>
@@ -30,7 +30,7 @@ class _MovieCards extends React.Component<AppProps> {
           <Card.Description></Card.Description>
         </Card.Content>
         <Card.Content extra>
-          <Button basic color="green">
+          <Button basic color="green" onClick={this.onButtonClick} id={imdbID}>
             Nominate
           </Button>
         </Card.Content>
