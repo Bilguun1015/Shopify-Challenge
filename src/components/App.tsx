@@ -6,6 +6,7 @@ import {
   fetchMovies,
   resetError,
   fetchNominations,
+  Key,
 } from '../actions';
 import { StoreState } from '../reducers';
 import { MovieCards } from './MovieCards';
@@ -20,6 +21,8 @@ import {
 } from 'semantic-ui-react';
 
 import '../App.css';
+import { renderIntoDocument } from 'react-dom/test-utils';
+import { nominationReducer } from '../reducers/movies';
 
 interface AppProps {
   movies: Movie[];
@@ -61,34 +64,37 @@ class _App extends React.Component<AppProps, AppState> {
     this.props.fetchMovies(name);
   };
 
+  checkNominations = (imdbID: string): boolean => {
+    if (this.props.nominations.length > 4) return true;
+    const keys: Key = {};
+    this.props.nominations.forEach((each: Movie) => {
+      keys[each.imdbID] = 1;
+    });
+    return keys[imdbID] === 1;
+  };
+
   renderMovies(): JSX.Element[] {
     return this.props.movies.map((movie: Movie) => {
-      return <MovieCards key={movie.imdbID} movie={movie} />;
+      return (
+        <MovieCards
+          key={movie.imdbID}
+          movie={movie}
+          nominations={this.checkNominations}
+        />
+      );
     });
   }
 
-  renderNominations(): JSX.Element {
-    if (this.props.nominations.length > 0) {
+  renderNominations(): JSX.Element[] {
+    return this.props.nominations.map((movie: Movie) => {
       return (
-        <Grid.Column>
-          <Header icon>
-            <Icon name="world" />
-            Your Nominations
-          </Header>
-          {this.props.nominations.map((movie: Movie) => {
-            return <MovieCards key={movie.imdbID} movie={movie} />;
-          })}
-        </Grid.Column>
+        <MovieCards
+          key={movie.imdbID}
+          movie={movie}
+          nominations={this.checkNominations}
+        />
       );
-    }
-    return (
-      <Grid.Column>
-        <Header icon>
-          <Icon name="world" />
-          You don't have any nominations.
-        </Header>
-      </Grid.Column>
-    );
+    });
   }
 
   clear = (): void => {
@@ -132,13 +138,23 @@ class _App extends React.Component<AppProps, AppState> {
                   </Card.Group>
                 }
               </Grid.Column>
-              {this.renderNominations()}
-              {/* <Grid.Column>
-                <Header icon>
-                  <Icon name="world" />
-                  You don't have any nominations.
-                </Header>
-              </Grid.Column> */}
+              {this.props.nominations.length > 0 ? (
+                <Grid.Column>
+                  <Header icon>
+                    <Icon name="world" />
+                    Your Nominations
+                  </Header>
+                  <Card.Group centered>{this.renderNominations()}</Card.Group>
+                </Grid.Column>
+              ) : (
+                <Grid.Column>
+                  <Header icon>
+                    <Icon name="world" />
+                    You don't have any nominations.
+                  </Header>
+                </Grid.Column>
+              )}
+              {/* <Card.Group centered>{this.renderNominations()}</Card.Group> */}
             </Grid.Row>
           </Grid>
         </Segment>

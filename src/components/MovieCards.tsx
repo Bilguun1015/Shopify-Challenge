@@ -7,6 +7,7 @@ import { Card, Image, Button } from 'semantic-ui-react';
 interface AppProps {
   movie: Movie;
   setNomination: typeof setNomination;
+  nominations(imdbID: string): boolean;
 }
 
 class _MovieCards extends React.Component<AppProps> {
@@ -38,7 +39,7 @@ class _MovieCards extends React.Component<AppProps> {
             color="green"
             onClick={this.onButtonClick}
             id={imdbID}
-            disabled={this.state.disabled}
+            disabled={this.props.nominations(imdbID)}
           >
             Nominate
           </Button>

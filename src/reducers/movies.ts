@@ -25,9 +25,6 @@ export const errorReducer = (state = errorInitialState, action: Action) => {
   }
 };
 
-// const nominationInitialState: Nominations = {
-//   nominations: [],
-// };
 export const nominationReducer = (state: Movie[] = [], action: Action) => {
   switch (action.type) {
     case ActionTypes.FETCH_NOMINATIONS:

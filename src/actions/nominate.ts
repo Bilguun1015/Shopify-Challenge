@@ -24,7 +24,6 @@ export const fetchNominations = (): Action => {
 };
 
 export const setNomination = (movie: Movie, imdbID: string): Action => {
-  console.log(movie, imdbID);
   // if (!getNomination(imdbID)) {
   let nominations = getStorageData();
   if (nominations) {

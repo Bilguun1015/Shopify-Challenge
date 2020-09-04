@@ -18,9 +18,9 @@ export interface Movie {
   Poster: string;
 }
 
-// export interface Nominations {
-//   nominations: [];
-// }
+export type Key = {
+  [key: string]: number;
+};
 
 interface FetchMoviesAction {
   type: ActionTypes.FETCH_MOVIES_SUCCESS;
