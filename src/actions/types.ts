@@ -2,6 +2,7 @@ export enum ActionTypes {
   FETCH_MOVIES_SUCCESS = 'FETCH_MOVIES_SUCCESS',
   FETCH_MOVIES_FAILURE = 'FETCH_MOVIES_FAILURE',
   FETCH_NOMINATIONS = 'FETCH_NOMINATIONS',
+  DELETE_NOMINATION = 'DELETE_NOMINATION',
   NOMINATE_MOVIE = 'NOMINATE_MOVIE',
   RESET_ERROR = 'RESET_ERROR',
 }
@@ -37,6 +38,11 @@ interface FetchNominations {
   payload: Movie[];
 }
 
+export interface DeleteNomination {
+  type: ActionTypes.DELETE_NOMINATION;
+  payload: string;
+}
+
 interface NominateMoive {
   type: ActionTypes.NOMINATE_MOVIE;
   payload: Movie[];
@@ -52,4 +58,5 @@ export type Action =
   | FetchMoviesFailure
   | FetchNominations
   | NominateMoive
+  | DeleteNomination
   | ResetError;

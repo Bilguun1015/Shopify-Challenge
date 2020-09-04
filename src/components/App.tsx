@@ -65,7 +65,6 @@ class _App extends React.Component<AppProps, AppState> {
   };
 
   checkNominations = (imdbID: string): boolean => {
-    if (this.props.nominations.length > 4) return true;
     const keys: Key = {};
     this.props.nominations.forEach((each: Movie) => {
       keys[each.imdbID] = 1;
@@ -81,6 +80,7 @@ class _App extends React.Component<AppProps, AppState> {
           movie={movie}
           nominations={this.checkNominations}
           side="search"
+          nominationsLength={this.props.nominations.length}
         />
       );
     });
@@ -94,6 +94,7 @@ class _App extends React.Component<AppProps, AppState> {
           movie={movie}
           nominations={this.checkNominations}
           side="nomination"
+          nominationsLength={this.props.nominations.length}
         />
       );
     });
@@ -146,7 +147,9 @@ class _App extends React.Component<AppProps, AppState> {
                     <Icon name="world" />
                     Your Nominations
                   </Header>
-                  <Card.Group centered>{this.renderNominations()}</Card.Group>
+                  <Card.Group centered className="nominations">
+                    {this.renderNominations()}
+                  </Card.Group>
                 </Grid.Column>
               ) : (
                 <Grid.Column>
@@ -156,11 +159,9 @@ class _App extends React.Component<AppProps, AppState> {
                   </Header>
                 </Grid.Column>
               )}
-              {/* <Card.Group centered>{this.renderNominations()}</Card.Group> */}
             </Grid.Row>
           </Grid>
         </Segment>
-        <button onClick={() => this.clear()}>Clear Storage</button>
       </div>
     );
   }

@@ -1,19 +1,18 @@
 import { Movie, ActionTypes, Action } from './types';
-// import { getStorageData } from '../utils/localStorage';
 
-export const getNomination = (key: string): boolean => {
-  const data = localStorage.getItem('nomination');
-  let nominations: Movie[] = [];
-  if (data) {
-    nominations = JSON.parse(data);
-  }
-  nominations.forEach((each) => {
-    if (each.imdbID === key) {
-      return true;
-    }
-  });
-  return false;
-};
+// export const getNomination = (key: string): boolean => {
+//   const data = localStorage.getItem('nomination');
+//   let nominations: Movie[] = [];
+//   if (data) {
+//     nominations = JSON.parse(data);
+//   }
+//   nominations.forEach((each) => {
+//     if (each.imdbID === key) {
+//       return true;
+//     }
+//   });
+//   return false;
+// };
 
 export const fetchNominations = (): Action => {
   const response = getStorageData();
@@ -24,19 +23,23 @@ export const fetchNominations = (): Action => {
 };
 
 export const setNomination = (movie: Movie, imdbID: string): Action => {
-  // if (!getNomination(imdbID)) {
-  let nominations = getStorageData();
-  if (nominations) {
-    nominations.push(movie);
-    localStorage.setItem('nomination', JSON.stringify(nominations));
-  } else {
-    const newNomination = [movie];
-    localStorage.setItem('nomination', JSON.stringify(newNomination));
-  }
-  const response = getStorageData();
+  const nominations = getStorageData();
+  nominations.push(movie);
+  setStorageData(nominations);
   return {
     type: ActionTypes.NOMINATE_MOVIE,
-    payload: response,
+    payload: nominations,
+  };
+};
+
+export const deleteNomination = (imdbID: string): Action => {
+  const nominations = getStorageData().filter(
+    (nomination) => nomination.imdbID !== imdbID
+  );
+  setStorageData(nominations);
+  return {
+    type: ActionTypes.DELETE_NOMINATION,
+    payload: imdbID,
   };
 };
 
@@ -46,4 +49,8 @@ const getStorageData = (): Movie[] => {
     return JSON.parse(response);
   }
   return [];
+};
+
+const setStorageData = (data: Movie[]): void => {
+  localStorage.setItem('nomination', JSON.stringify(data));
 };

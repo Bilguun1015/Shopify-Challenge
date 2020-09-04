@@ -1,25 +1,34 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Movie, Error, setNomination } from '../actions';
+import { Movie, Error, setNomination, deleteNomination } from '../actions';
 import { StoreState } from '../reducers';
 import { Card, Image, Button } from 'semantic-ui-react';
 
 interface AppProps {
   movie: Movie;
   setNomination: typeof setNomination;
+  deleteNomination: typeof deleteNomination;
   nominations(imdbID: string): boolean;
   side: string;
+  nominationsLength: number;
 }
 
 class _MovieCards extends React.Component<AppProps> {
   state = { disabled: false };
 
-  onButtonClick = (event: React.MouseEvent): void => {
+  onButtonSave = (event: React.MouseEvent): void => {
     const imdbID = event.currentTarget.getAttribute('id');
     if (imdbID === this.props.movie.imdbID) {
       this.props.setNomination(this.props.movie, imdbID);
     }
     this.setState({ disabled: true });
+  };
+
+  onButtonDelete = (event: React.MouseEvent): void => {
+    const imdbID = event.currentTarget.getAttribute('id');
+    if (imdbID === this.props.movie.imdbID) {
+      this.props.deleteNomination(imdbID);
+    }
   };
 
   render() {
@@ -39,14 +48,14 @@ class _MovieCards extends React.Component<AppProps> {
             <Button
               basic
               color="green"
-              onClick={this.onButtonClick}
+              onClick={this.onButtonSave}
               id={imdbID}
               disabled={this.props.nominations(imdbID)}
             >
               Nominate
             </Button>
           ) : (
-            <Button basic color="red">
+            <Button basic color="red" id={imdbID} onClick={this.onButtonDelete}>
               Remove
             </Button>
           )}
@@ -62,4 +71,5 @@ const MapStateToProps = ({ error }: StoreState): { error: Error } => {
 
 export const MovieCards = connect(MapStateToProps, {
   setNomination,
+  deleteNomination,
 })(_MovieCards);
