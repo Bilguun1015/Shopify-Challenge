@@ -1,7 +1,8 @@
 export enum ActionTypes {
   FETCH_MOVIES_SUCCESS = 'FETCH_MOVIES_SUCCESS',
   FETCH_MOVIES_FAILURE = 'FETCH_MOVIES_FAILURE',
-  DELETE_MOVIE = 'DELETE_MOVIE',
+  FETCH_NOMINATIONS = 'FETCH_NOMINATIONS',
+  NOMINATE_MOVIE = 'NOMINATE_MOVIE',
   RESET_ERROR = 'RESET_ERROR',
 }
 
@@ -17,6 +18,10 @@ export interface Movie {
   Poster: string;
 }
 
+// export interface Nominations {
+//   nominations: [];
+// }
+
 interface FetchMoviesAction {
   type: ActionTypes.FETCH_MOVIES_SUCCESS;
   payload: Movie[];
@@ -27,9 +32,14 @@ interface FetchMoviesFailure {
   payload: Error;
 }
 
-interface DeleteMovieAction {
-  type: ActionTypes.DELETE_MOVIE;
-  payload: string;
+interface FetchNominations {
+  type: ActionTypes.FETCH_NOMINATIONS;
+  payload: Movie[];
+}
+
+interface NominateMoive {
+  type: ActionTypes.NOMINATE_MOVIE;
+  payload: Movie[];
 }
 
 interface ResetError {
@@ -40,5 +50,6 @@ interface ResetError {
 export type Action =
   | FetchMoviesAction
   | FetchMoviesFailure
-  | DeleteMovieAction
+  | FetchNominations
+  | NominateMoive
   | ResetError;

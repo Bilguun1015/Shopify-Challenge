@@ -1,18 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Movie, Error, fetchMovies, resetError } from '../actions';
+import {
+  Movie,
+  Error,
+  fetchMovies,
+  resetError,
+  fetchNominations,
+} from '../actions';
 import { StoreState } from '../reducers';
 import { MovieCards } from './MovieCards';
 import {
   Input,
-  Menu,
   Segment,
   Card,
   Header,
   Icon,
   Grid,
   Divider,
-  Button,
 } from 'semantic-ui-react';
 
 import '../App.css';
@@ -22,12 +26,12 @@ interface AppProps {
   fetchMovies: Function;
   error: Error;
   resetError: typeof resetError;
+  fetchNominations: typeof fetchNominations;
+  nominations: Movie[];
 }
 
 interface AppState {
   movieName: string;
-  activeItem: string;
-  visible: boolean;
 }
 
 class _App extends React.Component<AppProps, AppState> {
@@ -36,17 +40,12 @@ class _App extends React.Component<AppProps, AppState> {
 
     this.state = {
       movieName: '',
-      activeItem: 'Search Results',
-      visible: true,
     };
   }
 
-  // componentDidUpdate(prevProps: AppProps, prevState: AppState): void {
-  //   if (prevState.visible && this.state.activeItem === 'Nominations') {
-  //     this.setState({ ...this.state, visible: !this.state.visible });
-  //     console.log(this.state);
-  //   }
-  // }
+  componentDidMount() {
+    this.props.fetchNominations();
+  }
 
   onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
@@ -62,19 +61,35 @@ class _App extends React.Component<AppProps, AppState> {
     this.props.fetchMovies(name);
   };
 
-  renderList(): JSX.Element[] {
+  renderMovies(): JSX.Element[] {
     return this.props.movies.map((movie: Movie) => {
       return <MovieCards key={movie.imdbID} movie={movie} />;
     });
   }
 
-  handleItemClick = (e: React.MouseEvent) => {
-    const tabName = e.currentTarget.innerHTML;
-    this.setState({
-      ...this.state,
-      activeItem: tabName,
-    });
-  };
+  renderNominations(): JSX.Element {
+    if (this.props.nominations.length > 0) {
+      return (
+        <Grid.Column>
+          <Header icon>
+            <Icon name="world" />
+            Your Nominations
+          </Header>
+          {this.props.nominations.map((movie: Movie) => {
+            return <MovieCards key={movie.imdbID} movie={movie} />;
+          })}
+        </Grid.Column>
+      );
+    }
+    return (
+      <Grid.Column>
+        <Header icon>
+          <Icon name="world" />
+          You don't have any nominations.
+        </Header>
+      </Grid.Column>
+    );
+  }
 
   clear = (): void => {
     if (window['localStorage']['nomination']) {
@@ -82,7 +97,7 @@ class _App extends React.Component<AppProps, AppState> {
     }
   };
   render() {
-    const { movieName, activeItem, visible } = this.state;
+    const { movieName } = this.state;
     const { error, message } = this.props.error;
     return (
       <div>
@@ -113,22 +128,21 @@ class _App extends React.Component<AppProps, AppState> {
                 ></Input>
                 {
                   <Card.Group centered>
-                    {error ? message : this.renderList()}
+                    {error ? message : this.renderMovies()}
                   </Card.Group>
                 }
               </Grid.Column>
-              <Grid.Column>
+              {this.renderNominations()}
+              {/* <Grid.Column>
                 <Header icon>
                   <Icon name="world" />
-                  Your Nominations
+                  You don't have any nominations.
                 </Header>
-                <Button primary>Create</Button>
-              </Grid.Column>
+              </Grid.Column> */}
             </Grid.Row>
           </Grid>
         </Segment>
-        {/* <button onClick={this.onButtonClick}>Search</button>
-        <button onClick={() => this.clear()}>Clear Storage</button> */}
+        <button onClick={() => this.clear()}>Clear Storage</button>
       </div>
     );
   }
@@ -137,8 +151,13 @@ class _App extends React.Component<AppProps, AppState> {
 const MapStateToProps = ({
   movies,
   error,
-}: StoreState): { movies: Movie[]; error: Error } => {
-  return { movies, error };
+  nominations,
+}: StoreState): { movies: Movie[]; error: Error; nominations: Movie[] } => {
+  return { movies, error, nominations };
 };
 
-export const App = connect(MapStateToProps, { fetchMovies, resetError })(_App);
+export const App = connect(MapStateToProps, {
+  fetchMovies,
+  resetError,
+  fetchNominations,
+})(_App);
