@@ -80,6 +80,7 @@ class _App extends React.Component<AppProps, AppState> {
           key={movie.imdbID}
           movie={movie}
           nominations={this.checkNominations}
+          side="search"
         />
       );
     });
@@ -92,6 +93,7 @@ class _App extends React.Component<AppProps, AppState> {
           key={movie.imdbID}
           movie={movie}
           nominations={this.checkNominations}
+          side="nomination"
         />
       );
     });

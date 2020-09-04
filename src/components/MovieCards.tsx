@@ -8,6 +8,7 @@ interface AppProps {
   movie: Movie;
   setNomination: typeof setNomination;
   nominations(imdbID: string): boolean;
+  side: string;
 }
 
 class _MovieCards extends React.Component<AppProps> {
@@ -34,15 +35,21 @@ class _MovieCards extends React.Component<AppProps> {
           <Card.Description></Card.Description>
         </Card.Content>
         <Card.Content extra>
-          <Button
-            basic
-            color="green"
-            onClick={this.onButtonClick}
-            id={imdbID}
-            disabled={this.props.nominations(imdbID)}
-          >
-            Nominate
-          </Button>
+          {this.props.side === 'search' ? (
+            <Button
+              basic
+              color="green"
+              onClick={this.onButtonClick}
+              id={imdbID}
+              disabled={this.props.nominations(imdbID)}
+            >
+              Nominate
+            </Button>
+          ) : (
+            <Button basic color="red">
+              Remove
+            </Button>
+          )}
         </Card.Content>
       </Card>
     );
@@ -56,10 +63,3 @@ const MapStateToProps = ({ error }: StoreState): { error: Error } => {
 export const MovieCards = connect(MapStateToProps, {
   setNomination,
 })(_MovieCards);
-
-{
-  /* <div onClick={this.onButtonClick} id={imdbID}>
-        Title: {Title}
-        Year: {Year}
-      </div> */
-}
