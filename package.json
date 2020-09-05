@@ -2,7 +2,7 @@
   "name": "shopify-challenge",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://github.com/Bilguun1015/Shopify-Challenge",
+  "homepage": "https://bilguun1015.github.io/Shopify-Challenge/",
   "dependencies": {
     "-": "0.0.1",
     "@testing-library/jest-dom": "^4.2.4",
