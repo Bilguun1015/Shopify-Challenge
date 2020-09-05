@@ -18,3 +18,7 @@
 .nominations .ui.segment.hidden {
   visibility: hidden;
 }
+
+.ui.form .field {
+  display: flex;
+}

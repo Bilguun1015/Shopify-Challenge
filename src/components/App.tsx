@@ -19,6 +19,7 @@ import {
   Grid,
   Divider,
   Form,
+  Button,
 } from 'semantic-ui-react';
 
 import '../App.css';
@@ -34,6 +35,7 @@ interface AppProps {
 
 interface AppState {
   movieName: string;
+  fetching: boolean;
 }
 
 class _App extends React.Component<AppProps, AppState> {
@@ -42,11 +44,24 @@ class _App extends React.Component<AppProps, AppState> {
 
     this.state = {
       movieName: '',
+      fetching: false,
     };
   }
 
-  componentDidMount() {
+  componentDidMount(): void {
     this.props.fetchNominations();
+  }
+
+  componentDidUpdate(prevProps: AppProps): void {
+    if (!prevProps.movies.length && this.props.movies.length) {
+      this.setState({ fetching: false });
+    }
+    if (prevProps.movies !== this.props.movies) {
+      this.setState({ fetching: false });
+    }
+    if (!prevProps.error.message.length && this.props.error.message) {
+      this.setState({ fetching: false });
+    }
   }
 
   onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,6 +76,7 @@ class _App extends React.Component<AppProps, AppState> {
     this.props.resetError();
     const name = this.state.movieName.replace(/\s/g, '+');
     this.props.fetchMovies(name);
+    this.setState({ ...this.state, fetching: true });
   };
 
   checkNominations = (imdbID: string): boolean => {
@@ -108,7 +124,7 @@ class _App extends React.Component<AppProps, AppState> {
     }
   };
   render() {
-    const { movieName } = this.state;
+    const { movieName, fetching } = this.state;
     const { error, message } = this.props.error;
     return (
       <div>
@@ -132,13 +148,22 @@ class _App extends React.Component<AppProps, AppState> {
                       name="movieName"
                       defaultValue={movieName}
                       onChange={this.onInputChange}
-                      action={{
-                        type: 'submit',
-                        content: 'Search',
-                        onClick: this.onButtonClick,
-                      }}
+                      // loading={fetching}
+                      // action={{
+                      //   type: 'submit',
+                      //   content: 'Search',
+                      //   onClick: this.onButtonClick,
+                      // }}
                       placeholder="search movies..."
                     ></Input>
+                    <Button
+                      basic
+                      loading={fetching}
+                      type="submit"
+                      onClick={this.onButtonClick}
+                    >
+                      Search
+                    </Button>
                   </Form.Field>
                 </Form>
                 {
