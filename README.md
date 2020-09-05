@@ -6,4 +6,7 @@ This project is for Shopify challenge to build a website to search `OMDB` for mo
 
 ## Tech Stack
 
-I will be using React with Typescript, possibly Redux store and browser local storage.
+I will be using React with Typescript to display components.
+Redux store was used for state management.
+LocalStorage was used for to save nominations.
+For styling components -- I used [React Semantic UI](https://react.semantic-ui.com/)

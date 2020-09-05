@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux';
-import { moviesReducer, errorReducer, nominationReducer } from './movies';
+import { moviesReducer } from './movies';
+import { errorReducer } from './error';
+import { nominationReducer } from './nominate';
 import { Movie, Error } from '../actions';
 
 export interface StoreState {
