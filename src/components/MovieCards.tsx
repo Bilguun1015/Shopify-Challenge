@@ -10,7 +10,6 @@ interface AppProps {
   deleteNomination: typeof deleteNomination;
   nominations(imdbID: string): boolean;
   side: string;
-  nominationsLength: number;
 }
 
 class _MovieCards extends React.Component<AppProps> {

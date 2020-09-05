@@ -38,7 +38,7 @@ interface FetchNominations {
   payload: Movie[];
 }
 
-export interface DeleteNomination {
+interface DeleteNomination {
   type: ActionTypes.DELETE_NOMINATION;
   payload: string;
 }

@@ -98,7 +98,6 @@ class _App extends React.Component<AppProps, AppState> {
           movie={movie}
           nominations={this.checkNominations}
           side="search"
-          nominationsLength={this.props.nominations.length}
         />
       );
     });
@@ -112,7 +111,6 @@ class _App extends React.Component<AppProps, AppState> {
           movie={movie}
           nominations={this.checkNominations}
           side="nomination"
-          nominationsLength={this.props.nominations.length}
         />
       );
     });
