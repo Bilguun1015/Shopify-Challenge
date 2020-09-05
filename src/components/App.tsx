@@ -148,12 +148,6 @@ class _App extends React.Component<AppProps, AppState> {
                       name="movieName"
                       defaultValue={movieName}
                       onChange={this.onInputChange}
-                      // loading={fetching}
-                      // action={{
-                      //   type: 'submit',
-                      //   content: 'Search',
-                      //   onClick: this.onButtonClick,
-                      // }}
                       placeholder="search movies..."
                     ></Input>
                     <Button
