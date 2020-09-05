@@ -18,11 +18,10 @@ import {
   Icon,
   Grid,
   Divider,
+  Form,
 } from 'semantic-ui-react';
 
 import '../App.css';
-import { renderIntoDocument } from 'react-dom/test-utils';
-import { nominationReducer } from '../reducers/movies';
 
 interface AppProps {
   movies: Movie[];
@@ -65,6 +64,9 @@ class _App extends React.Component<AppProps, AppState> {
   };
 
   checkNominations = (imdbID: string): boolean => {
+    if (this.props.nominations.length >= 5) {
+      return true;
+    }
     const keys: Key = {};
     this.props.nominations.forEach((each: Movie) => {
       keys[each.imdbID] = 1;
@@ -124,17 +126,21 @@ class _App extends React.Component<AppProps, AppState> {
                   <Icon name="search" />
                   Find Movies
                 </Header>
-                <Input
-                  name="movieName"
-                  defaultValue={movieName}
-                  onChange={this.onInputChange}
-                  action={{
-                    type: 'submit',
-                    content: 'Search',
-                    onClick: this.onButtonClick,
-                  }}
-                  placeholder="search movies..."
-                ></Input>
+                <Form>
+                  <Form.Field>
+                    <Input
+                      name="movieName"
+                      defaultValue={movieName}
+                      onChange={this.onInputChange}
+                      action={{
+                        type: 'submit',
+                        content: 'Search',
+                        onClick: this.onButtonClick,
+                      }}
+                      placeholder="search movies..."
+                    ></Input>
+                  </Form.Field>
+                </Form>
                 {
                   <Card.Group centered>
                     {error ? message : this.renderMovies()}
@@ -142,14 +148,19 @@ class _App extends React.Component<AppProps, AppState> {
                 }
               </Grid.Column>
               {this.props.nominations.length > 0 ? (
-                <Grid.Column>
+                <Grid.Column className="nominations">
                   <Header icon>
                     <Icon name="world" />
                     Your Nominations
                   </Header>
-                  <Card.Group centered className="nominations">
-                    {this.renderNominations()}
-                  </Card.Group>
+                  <Segment
+                    className={
+                      this.props.nominations.length >= 5 ? 'visible' : 'hidden'
+                    }
+                  >
+                    You nominated your maximum of five movies.
+                  </Segment>
+                  <Card.Group centered>{this.renderNominations()}</Card.Group>
                 </Grid.Column>
               ) : (
                 <Grid.Column>

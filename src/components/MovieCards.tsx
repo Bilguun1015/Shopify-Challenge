@@ -14,14 +14,11 @@ interface AppProps {
 }
 
 class _MovieCards extends React.Component<AppProps> {
-  state = { disabled: false };
-
   onButtonSave = (event: React.MouseEvent): void => {
     const imdbID = event.currentTarget.getAttribute('id');
     if (imdbID === this.props.movie.imdbID) {
       this.props.setNomination(this.props.movie, imdbID);
     }
-    this.setState({ disabled: true });
   };
 
   onButtonDelete = (event: React.MouseEvent): void => {
@@ -36,7 +33,7 @@ class _MovieCards extends React.Component<AppProps> {
     return (
       <Card raised={true}>
         <Card.Content>
-          <Image src={Poster} floated="right" size="mini" />
+          <Image src={Poster} floated="right" size="tiny" />
           <Card.Header>{Title}</Card.Header>
           <Card.Meta>
             <span className="date">Release Year: {Year}</span>

@@ -10,6 +10,11 @@
   margin-top: 1em;
 }
 
-.ui.centered.cards.nominations {
-  margin-top: 4.7em;
+.nominations .ui.segment {
+  margin-top: 0;
+  padding: 0.6em 1em 0.6em 1em;
+}
+
+.nominations .ui.segment.hidden {
+  visibility: hidden;
 }
