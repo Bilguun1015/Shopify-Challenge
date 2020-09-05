@@ -1,19 +1,5 @@
 import { Movie, ActionTypes, Action } from './types';
 
-// export const getNomination = (key: string): boolean => {
-//   const data = localStorage.getItem('nomination');
-//   let nominations: Movie[] = [];
-//   if (data) {
-//     nominations = JSON.parse(data);
-//   }
-//   nominations.forEach((each) => {
-//     if (each.imdbID === key) {
-//       return true;
-//     }
-//   });
-//   return false;
-// };
-
 export const fetchNominations = (): Action => {
   const response = getStorageData();
   return {
