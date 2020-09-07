@@ -2,11 +2,11 @@ This project is hosted on Github Pages [HERE](https://bilguun1015.github.io/Shop
 
 ## Project Overview
 
-This project is for Shopify challenge to build a website to search `OMDB` for movies. Users will be able to nominate up to five movies.
+This is a React project for a Shopify challenge. The point of the project was to build a website that would search `OMDB` for movies. Users are able to search and nominate up to five movies.
 
 ## Tech Stack
 
-I will be using React with Typescript to display components.
+React was used with Typescript to display components.
 Redux store was used for state management.
-LocalStorage was used for to save nominations.
-For styling components -- I used [React Semantic UI](https://react.semantic-ui.com/)
+LocalStorage was used to save nominations and data persistancy.
+To style the components, [React Semantic UI](https://react.semantic-ui.com/) was used.
