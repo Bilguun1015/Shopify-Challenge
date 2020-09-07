@@ -2,7 +2,7 @@ This project is hosted on Github Pages [HERE](https://bilguun1015.github.io/Shop
 
 ## Project Overview
 
-This is a React project for a Shopify challenge. The point of the project was to build a website that would search `OMDB` for movies. Users are able to search and nominate up to five movies.
+This is a React project for a Shopify challenge. The point of the project was to build a website that would search `OMDB API` for movies. Users are able to search and nominate up to five movies.
 
 ## Tech Stack
 
