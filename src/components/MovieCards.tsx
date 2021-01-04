@@ -32,10 +32,10 @@ class _MovieCards extends React.Component<AppProps> {
     return (
       <Card raised={true}>
         <Card.Content>
-          <Image src={Poster} floated="right" size="tiny" />
+          <Image src={Poster} floated='right' size='tiny' />
           <Card.Header>{Title}</Card.Header>
           <Card.Meta>
-            <span className="date">Release Year: {Year}</span>
+            <span className='date'>Release Year: {Year}</span>
           </Card.Meta>
           <Card.Description></Card.Description>
         </Card.Content>
@@ -43,7 +43,7 @@ class _MovieCards extends React.Component<AppProps> {
           {this.props.side === 'search' ? (
             <Button
               basic
-              color="green"
+              color='green'
               onClick={this.onButtonSave}
               id={imdbID}
               disabled={this.props.nominations(imdbID)}
@@ -51,7 +51,7 @@ class _MovieCards extends React.Component<AppProps> {
               Nominate
             </Button>
           ) : (
-            <Button basic color="red" id={imdbID} onClick={this.onButtonDelete}>
+            <Button basic color='red' id={imdbID} onClick={this.onButtonDelete}>
               Remove
             </Button>
           )}

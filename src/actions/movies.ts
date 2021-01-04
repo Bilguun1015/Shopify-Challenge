@@ -5,7 +5,7 @@ import { ActionTypes, Action } from './types';
 export const fetchMovies = (movieName: string) => {
   return async (dispatch: Dispatch) => {
     const response = await axios.get(
-      `http://www.omdbapi.com/?s=${movieName}&type=movie&apikey=${process.env.REACT_APP_API_KEY}`
+      `http://www.omdbapi.com/?s=${movieName}&type=movie&apikey=${process.env.REACT_APP_API_KEY}/:splat 200`
     );
     if (response.data.Response === 'True') {
       dispatch<Action>({
