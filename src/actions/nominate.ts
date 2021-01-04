@@ -1,5 +1,6 @@
 import { Movie, ActionTypes, Action } from './types';
 
+// fetch the nominations from the localstorage and return action object
 export const fetchNominations = (): Action => {
   const response = getStorageData();
   return {
@@ -8,6 +9,7 @@ export const fetchNominations = (): Action => {
   };
 };
 
+// save a nominated movie in the localstorage
 export const setNomination = (movie: Movie, imdbID: string): Action => {
   const nominations = getStorageData();
   nominations.push(movie);
@@ -18,6 +20,7 @@ export const setNomination = (movie: Movie, imdbID: string): Action => {
   };
 };
 
+// delete a nomination from the localstorage
 export const deleteNomination = (imdbID: string): Action => {
   const nominations = getStorageData().filter(
     (nomination) => nomination.imdbID !== imdbID
@@ -29,6 +32,7 @@ export const deleteNomination = (imdbID: string): Action => {
   };
 };
 
+// utility functions
 const getStorageData = (): Movie[] => {
   let response = localStorage.getItem('nomination');
   if (response) {

@@ -6,7 +6,6 @@ import {
   fetchMovies,
   resetError,
   fetchNominations,
-  Key,
 } from '../actions';
 import { StoreState } from '../reducers';
 import { MovieCards } from './MovieCards';
@@ -79,25 +78,14 @@ class _App extends React.Component<AppProps, AppState> {
     this.setState({ ...this.state, fetching: true });
   };
 
-  checkNominations = (imdbID: string): boolean => {
-    if (this.props.nominations.length >= 5) {
-      return true;
-    }
-    const keys: Key = {};
-    this.props.nominations.forEach((each: Movie) => {
-      keys[each.imdbID] = 1;
-    });
-    return keys[imdbID] === 1;
-  };
-
   renderMovies(): JSX.Element[] {
     return this.props.movies.map((movie: Movie) => {
       return (
         <MovieCards
           key={movie.imdbID}
           movie={movie}
-          nominations={this.checkNominations}
-          side="search"
+          nominations={this.props.nominations}
+          side='search'
         />
       );
     });
@@ -109,8 +97,8 @@ class _App extends React.Component<AppProps, AppState> {
         <MovieCards
           key={movie.imdbID}
           movie={movie}
-          nominations={this.checkNominations}
-          side="nomination"
+          nominations={this.props.nominations}
+          side='nomination'
         />
       );
     });
@@ -126,32 +114,32 @@ class _App extends React.Component<AppProps, AppState> {
     const { error, message } = this.props.error;
     return (
       <div>
-        <Header as="h2" icon textAlign="center">
-          <Icon name="tv" circular />
+        <Header as='h2' icon textAlign='center'>
+          <Icon name='tv' circular />
           <Header.Content>The Shoppies</Header.Content>
         </Header>
         <Segment placeholder>
-          <Grid columns={2} stackable textAlign="center">
+          <Grid columns={2} stackable textAlign='center'>
             <Divider vertical></Divider>
 
-            <Grid.Row verticalAlign="top">
+            <Grid.Row verticalAlign='top'>
               <Grid.Column>
                 <Header icon>
-                  <Icon name="search" />
+                  <Icon name='search' />
                   Find Movies
                 </Header>
                 <Form>
                   <Form.Field>
                     <Input
-                      name="movieName"
+                      name='movieName'
                       defaultValue={movieName}
                       onChange={this.onInputChange}
-                      placeholder="search movies..."
+                      placeholder='search movies...'
                     ></Input>
                     <Button
                       basic
                       loading={fetching}
-                      type="submit"
+                      type='submit'
                       onClick={this.onButtonClick}
                     >
                       Search
@@ -165,9 +153,9 @@ class _App extends React.Component<AppProps, AppState> {
                 }
               </Grid.Column>
               {this.props.nominations.length > 0 ? (
-                <Grid.Column className="nominations">
+                <Grid.Column className='nominations'>
                   <Header icon>
-                    <Icon name="world" />
+                    <Icon name='world' />
                     Your Nominations
                   </Header>
                   <Segment
@@ -182,7 +170,7 @@ class _App extends React.Component<AppProps, AppState> {
               ) : (
                 <Grid.Column>
                   <Header icon>
-                    <Icon name="world" />
+                    <Icon name='world' />
                     You don't have any nominations.
                   </Header>
                 </Grid.Column>

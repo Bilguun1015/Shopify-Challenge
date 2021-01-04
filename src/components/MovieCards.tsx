@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Movie, Error, setNomination, deleteNomination } from '../actions';
+import { Movie, Error, setNomination, deleteNomination, Key } from '../actions';
 import { StoreState } from '../reducers';
 import { Card, Image, Button } from 'semantic-ui-react';
 
@@ -8,7 +8,7 @@ interface AppProps {
   movie: Movie;
   setNomination: typeof setNomination;
   deleteNomination: typeof deleteNomination;
-  nominations(imdbID: string): boolean;
+  nominations: Movie[];
   side: string;
 }
 
@@ -25,6 +25,19 @@ class _MovieCards extends React.Component<AppProps> {
     if (imdbID === this.props.movie.imdbID) {
       this.props.deleteNomination(imdbID);
     }
+  };
+
+  // checks if the movie is nominated
+  checkNominations = (imdbID: string): boolean => {
+    if (this.props.nominations.length >= 5) {
+      return true;
+    }
+    const keys: Key = {};
+    this.props.nominations.forEach((each: Movie) => {
+      console.log(each);
+      keys[each.imdbID] = 1;
+    });
+    return keys[imdbID] === 1;
   };
 
   render() {
@@ -46,7 +59,7 @@ class _MovieCards extends React.Component<AppProps> {
               color='green'
               onClick={this.onButtonSave}
               id={imdbID}
-              disabled={this.props.nominations(imdbID)}
+              disabled={this.checkNominations(imdbID)}
             >
               Nominate
             </Button>
