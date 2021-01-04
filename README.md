@@ -6,7 +6,9 @@ This is a React project for the Shopify challenge. The goal of the project was t
 
 ## Tech Stack
 
-React was used with Typescript to display components.
-Redux store was used for state management.
-LocalStorage was used to save nominations and data persistancy.
-To style the components, [React Semantic UI](https://react.semantic-ui.com/) was used.
+-- React
+-- TypeScript
+-- Redux store
+-- Localstorage
+-- Axios
+-- [React Semantic UI](https://react.semantic-ui.com/)
