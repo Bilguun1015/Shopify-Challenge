@@ -1,4 +1,4 @@
-This project is hosted on Github Pages [HERE](https://shopify-fe-challenge.netlify.app/).
+This project is hosted on Netlify [HERE](https://shopify-fe-challenge.netlify.app/).
 
 ## Project Overview
 
