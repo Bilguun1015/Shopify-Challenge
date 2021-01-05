@@ -73,8 +73,8 @@ class _App extends React.Component<AppProps, AppState> {
 
   onButtonClick = (): void => {
     this.props.resetError();
-    const name = this.state.movieName.replace(/\s/g, '+');
-    this.props.fetchMovies(name);
+    // const name = this.state.movieName.replace(/\s/g, '+');
+    this.props.fetchMovies(this.state.movieName);
     this.setState({ ...this.state, fetching: true });
   };
 
