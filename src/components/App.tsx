@@ -69,11 +69,11 @@ class _App extends React.Component<AppProps, AppState> {
       ...this.state,
       [name]: value,
     });
+    if (this.props.error.error) this.props.resetError();
   };
 
   onButtonClick = (): void => {
     this.props.resetError();
-    // const name = this.state.movieName.replace(/\s/g, '+');
     this.props.fetchMovies(this.state.movieName);
     this.setState({ ...this.state, fetching: true });
   };
@@ -107,7 +107,7 @@ class _App extends React.Component<AppProps, AppState> {
   renderErrorMessage(): JSX.Element {
     return (
       <div className='error'>
-        {this.state.movieName.length > 1
+        {this.state.movieName.length && this.props.error.message
           ? `${this.state.movieName}: ${this.props.error.message}`
           : 'A movie title is needed!'}
       </div>
