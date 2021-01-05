@@ -4,6 +4,7 @@
 
 .ui.centered.cards {
   margin-top: 2em;
+  min-height: 2rem;
 }
 
 .ui.icon.center.aligned.header {

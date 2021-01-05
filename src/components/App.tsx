@@ -104,6 +104,16 @@ class _App extends React.Component<AppProps, AppState> {
     });
   }
 
+  renderErrorMessage(): JSX.Element {
+    return (
+      <div className='error'>
+        {this.state.movieName.length > 1
+          ? `${this.state.movieName}: ${this.props.error.message}`
+          : 'A movie title is needed!'}
+      </div>
+    );
+  }
+
   clear = (): void => {
     if (window['localStorage']['nomination']) {
       localStorage.removeItem('nomination');
@@ -111,7 +121,7 @@ class _App extends React.Component<AppProps, AppState> {
   };
   render() {
     const { movieName, fetching } = this.state;
-    const { error, message } = this.props.error;
+    const { error } = this.props.error;
     return (
       <div>
         <Header as='h2' icon textAlign='center'>
@@ -120,7 +130,7 @@ class _App extends React.Component<AppProps, AppState> {
         </Header>
         <Segment placeholder>
           <Grid columns={2} stackable textAlign='center'>
-            <Divider vertical></Divider>
+            <Divider vertical>{this.props.nominations.length}</Divider>
 
             <Grid.Row verticalAlign='top'>
               <Grid.Column>
@@ -148,7 +158,7 @@ class _App extends React.Component<AppProps, AppState> {
                 </Form>
                 {
                   <Card.Group centered>
-                    {error ? message : this.renderMovies()}
+                    {error ? this.renderErrorMessage() : this.renderMovies()}
                   </Card.Group>
                 }
               </Grid.Column>
